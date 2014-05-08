@@ -5,7 +5,8 @@ import java.util.*;
  */
 public class Board {
 	int[][] values;
-	Queue<Integer> tiles;
+	List<Integer> tiles;
+	int tileIndex;
 	boolean isGameOver;
 	
 	/**
@@ -13,7 +14,8 @@ public class Board {
 	 */
 	public Board() {
 		values = new int[4][4];
-		tiles = new LinkedList<Integer>();
+		tiles = new ArrayList<Integer>();
+		tileIndex = 0;
 		isGameOver = false;
 	}
 	
@@ -26,8 +28,8 @@ public class Board {
 		for (int y = 0; y < 4; y++) {
 			System.arraycopy(b.values[y], 0, values[y], 0, 4);
 		}
-		tiles = new LinkedList<Integer>();
-		tiles.addAll(b.tiles);
+		tiles = b.tiles;
+		tileIndex = b.tileIndex;
 		isGameOver = false;
 	}
 	

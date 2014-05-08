@@ -135,7 +135,7 @@ public class Threes {
 		Board b = new Board(board);
 		
 		// Check that there are tiles remaining to be placed
-		if (b.tiles.isEmpty()) {
+		if (b.tileIndex == b.tiles.size()) {
 			b.isGameOver = true;
 			return b;
 		}
@@ -173,7 +173,7 @@ public class Threes {
 		
 		// Place the next tile on the lowest scoring slide
 		Slide s = slides.get(0);
-		int t = b.tiles.remove();
+		int t = b.tiles.get(b.tileIndex++);
 		switch (move) {
 			case UP:
 				b.values[3][s.index] = t;
