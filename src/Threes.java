@@ -12,9 +12,9 @@ public class Threes {
 	private static final boolean DEBUG = false;
 	
 	/**
-	 * The depth limit when searching for a move.
+	 * The maximum depth limit when searching for a move.
 	 */
-	private static final int DEPTH_LIMIT = 5;
+	private static final int MAX_DEPTH_LIMIT = 6;
 	
 	/**
 	 * Main method to play a given board and output a sequence of moves
@@ -42,39 +42,87 @@ public class Threes {
 	public Threes(File inputFile, File outputFile) {
 		try {
 			// Read the input file
-			Board board = readInput(inputFile);
+			Board boardInitial = readInput(inputFile);
 			
 			// Open the output file for writing
 			BufferedWriter out = new BufferedWriter(new FileWriter(outputFile));
 			
 			// Print header comments
+			out.write("Input: " + inputFile + "\n\n");
 			System.out.println("Input: " + inputFile);
 			System.out.println();
-			out.write("Input: " + inputFile + "\n\n");
 			
 			// Generate and print moves
-			while (true) {
-				if (DEBUG) {
+			int moveCount = 0;
+			long startTime = System.currentTimeMillis();
+			
+			Board bestBoard = null;
+			String bestMoves = "";
+			int bestScore = 0;
+			
+			if (DEBUG) {
+				Board board = new Board(boardInitial);
+				StringBuilder sb = new StringBuilder();
+				while (true) {
 					System.out.println(board.toString());
 					Move userMove = readMove();
 					board = makeMove(board, userMove);
 					if (board.isGameOver) break;
-					out.write(userMove.key);
-				} else {
-					Move bestMove = findBestMove(board, DEPTH_LIMIT);
-					board = makeMove(board, bestMove);
-					if (board.isGameOver) break;
-					System.out.print(bestMove.key);
-					out.write(bestMove.key);
+					sb.append(userMove.key);
+					moveCount++;
+				}
+				String moves = sb.toString();
+				System.out.println();
+				int score = board.getScore();
+				bestBoard = board;
+				bestMoves = moves;
+				bestScore = score;
+			} else {
+				for (int depth = 1; depth <= MAX_DEPTH_LIMIT; depth++) {
+					Board board = new Board(boardInitial);
+					System.out.println("Searching at depth " + depth);
+					System.out.print("Moves: ");
+					StringBuilder sb = new StringBuilder();
+					while (true) {
+						Move bestMove = findBestMove(board, depth);
+						board = makeMove(board, bestMove);
+						if (board.isGameOver) break;
+						sb.append(bestMove.key);
+						System.out.print(bestMove.key);
+						moveCount++;
+					}
+					String moves = sb.toString();
+					System.out.println();
+					int score = board.getScore();
+					System.out.println("Score: " + score);
+					System.out.println();
+					if (bestBoard == null || score > bestScore) {
+						bestBoard = board;
+						bestMoves = moves;
+						bestScore = score;
+					}
 				}
 			}
-			System.out.println();
-			out.write("\n");
 			
-			// Print final score
-			int finalScore = board.getScore();
-			System.out.println(finalScore);
-			out.write(finalScore + "\n");
+			long endTime = System.currentTimeMillis();
+			double timeSecs = (endTime - startTime) / 1000.0;
+			System.out.println("Total moves: " + moveCount);
+			System.out.println("Time taken: " + timeSecs + " seconds");
+			double movesPerSec = moveCount / timeSecs;
+			System.out.println((int) movesPerSec + " moves per second");
+			System.out.println();
+			
+			out.write(bestMoves + "\n");
+			System.out.println("Best moves written to '" + outputFile.getName() + "'.");
+			
+			// Print best score
+			out.write(bestScore + "\n");
+			System.out.println("Best score: " + bestScore);
+			System.out.println();
+			
+			// Print final board
+			System.out.println("Final board:");
+			System.out.print(bestBoard.toString());
 			
 			// Close output
 			out.flush();
