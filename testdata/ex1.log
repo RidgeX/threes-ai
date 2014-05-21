@@ -1,0 +1,46 @@
+Input: ex1.in
+
+Searching with lookahead 1
+Moves: RURLLRLUULUULURUUURUULLULUUURDRU
+Score: 413
+
+Searching with lookahead 2
+Moves: LURULULRRURLDURUURUUURURRULRLUUL
+Score: 449
+
+Searching with lookahead 3
+Moves: UDLDDDLDDLLLRLUUDLUULDUULUUDULLL
+Score: 521
+
+Searching with lookahead 4
+Moves: LURLUURULLLDDULUUULDDLRLDDUULLDL
+Score: 524
+
+Searching with lookahead 5
+Moves: UDLDLLDLLDURULULURRULLRLULURRULU
+Score: 530
+
+Searching with lookahead 6
+Moves: UDDDLDUDLLDDLULUUDLDDDULLDDDLDDL
+Score: 530
+
+Searching with lookahead 7
+Moves: UDDDLLRLDDURULURLUDRLUUURURDURUR
+Score: 521
+
+Searching with lookahead 8
+Moves: LLRUDDLDUDUUUUURRRUDUUDDRLDDULUU
+Score: 529
+
+Total moves: 256
+Time taken: 9.768 seconds
+26 moves per second
+
+Best moves written to 'ex1.out'.
+Best score: 530
+
+Final board:
+48 48 3 2
+3 0 12 0
+2 0 0 0
+0 6 0 0
