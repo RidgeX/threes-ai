@@ -14,7 +14,7 @@ public class Threes {
 	/**
 	 * The maximum depth limit when searching for a move.
 	 */
-	private static final int MAX_DEPTH_LIMIT = 6;
+	private static final int MAX_DEPTH_LIMIT = 8;
 	
 	/**
 	 * Main method to play a given board and output a sequence of moves
@@ -80,7 +80,7 @@ public class Threes {
 			} else {
 				for (int depth = 1; depth <= MAX_DEPTH_LIMIT; depth++) {
 					Board board = new Board(boardInitial);
-					System.out.println("Searching at depth " + depth);
+					System.out.println("Searching with lookahead " + depth);
 					System.out.print("Moves: ");
 					StringBuilder sb = new StringBuilder();
 					while (true) {

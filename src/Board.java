@@ -68,11 +68,23 @@ public class Board {
 					int vl = (x > 0 ? values[y][x-1] : 0);
 					int vr = (x < 3 ? values[y][x+1] : 0);
 					
+					// Add points for any pairs of tiles that can be merged
+					if ((v == 1 && vu == 2) || (v == 2 && vu == 1) || (v > 2 && v == vu)) score += 1;
+					if ((v == 1 && vd == 2) || (v == 2 && vd == 1) || (v > 2 && v == vd)) score += 1;
+					if ((v == 1 && vl == 2) || (v == 2 && vl == 1) || (v > 2 && v == vl)) score += 1;
+					if ((v == 1 && vr == 2) || (v == 2 && vr == 1) || (v > 2 && v == vr)) score += 1;
+					
 					// Penalise low-value tiles for being trapped between:
 					//  - Two high-value tiles
 					//  - A high-value tile and an edge
 					if ((x == 0 || (vl > 2 && v < vl)) && (x == 3 || (vr > 2 && v < vr))) score -= 5;
 					if ((y == 0 || (vu > 2 && v < vu)) && (y == 3 || (vd > 2 && v < vd))) score -= 5;
+					
+					// Bonus points if any adjacent tile is twice in value
+					if (v > 2 && (v*2 == vu || v*2 == vd || v*2 == vl || v*2 == vr)) score += 1;
+				} else {
+					// Add points for empty spaces
+					score += 2;
 				}
 			}
 		}
