@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * A program to generate some test inputs.
  */
-public class TestGen {
+public class TestGenV2 {
 	/**
 	 * The number of tiles to be added.
 	 */
@@ -54,15 +54,19 @@ public class TestGen {
 	
 	/**
 	 * Adds a new deck of tiles to the queue.
-	 * (A deck consists of twelve tiles, four of each value from 1 to 3.)
 	 */
 	private static void addDeck() {
 		List<Integer> deck = new ArrayList<Integer>();
-		for (int i = 0; i < 4; i++) {
-			for (int v = 1; v <= 3; v++) {
-				deck.add(v);
-			}
+		for (int i = 0; i < 12; i++) {
+			deck.add(1);
+			deck.add(2);
 		}
+		for (int i = 0; i < 3; i++) {
+			deck.add(3);
+		}
+		deck.add(6);
+		deck.add(12);
+		deck.add(24);
 		Collections.shuffle(deck, random);
 		tiles.addAll(deck);
 	}
